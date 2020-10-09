@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <router-link to="/index">列表页</router-link>
+      <router-link to="/login">主页</router-link>
+      <router-link to="/list">尾页</router-link>
+      <router-view></router-view>
+    </div>
+    <script src="./vue.js"></script>
+    <script src="./vue-router.js"></script>
+    <script>
+      const rou = new VueRouter({
+        routes: [
+          {
+            path: '/index',
+            component: {
+              template: `<div>我是一个div标签</div>`
+            }
+          },
+          {
+            path: '/login',
+            component: {
+              template: `<p>我是一个p标签</p>`
+            }
+          },
+          {
+            path: '/list',
+            component: {
+              template: `<div>
+              <div>{{msg}}</div>
+              <button @click='add'>点击一下</button>
+              </div>`,
+              data() {
+                return {
+                  msg: 1
+                }
+              },
+              methods: {
+                add() {
+                  this.msg++
+                }
+              }
+            }
+          }
+        ]
+      })
+
+      const vm = new Vue({
+        el: '#app',
+        router: rou
+      })
+
+      // vue-router 为了实现导航链接的自动跳转，专门提供了导航链接 router-link
+      // router - link的注意点
+      // 1.router-link实质就是a标签
+      // 2.为了实现他的跳转，必须配置to属性，用于跳转特定的组件
+    </script>
+  </body>
+</html>

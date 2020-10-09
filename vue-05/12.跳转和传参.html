@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <router-link to="/"> 首页</router-link>
+      <router-link to="/list"> 不传参跳转</router-link>
+      <router-link to="/user/3"> 传参跳转（路由传值）</router-link>
+      <router-link to="/login?name=冰箱"> 传参跳转（查询参数传值）</router-link>
+      <router-view></router-view>
+    </div>
+    <script src="./vue.js"></script>
+    <script src="./vue-router.js"></script>
+    <script>
+      const router = new VueRouter({
+        routes: [
+          {
+            path: '/',
+            component: {
+              template: `<div>我是一个div组件</div>`
+            }
+          },
+          {
+            path: '/list',
+            component: {
+              template: `<div>我是一个列表页</div>`
+            }
+          },
+          {
+            path: '/user/:id',
+            component: {
+              template: `<div>我是一个用户页----{{
+                      $route.params.id}}</div>`
+            }
+          },
+
+          {
+            path: '/login',
+            component: {
+              template: `<div>我是一个商品页----{{$route.query.name}}</div>`
+            }
+          }
+        ]
+      })
+      const vm = new Vue({
+        el: '#app',
+        router
+      })
+
+      // 路由常见的传参的方式
+      // 1.通过路由传值 参数是路由的一部分
+      // 通过 $route.params.id获取
+      // 2.通过查询参数进行传参
+      // 通过$route.query.name
+
+      // 常见的跳转路由方式
+      // 1，声明式导航
+      // 通过router-link 跳转
+      // 类似于 < a href = "http://www.baidu.com" > < /a>
+
+      // 2.编程式导航，通过js方式跳转
+      // 类似于location.href=http://www.baidu.com 跳转
+    </script>
+  </body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <panel :title="msg">
+        <template v-slot:body="obj">
+          <p>我的年龄：{{obj.age}}</p>
+          <p>我挣钱{{obj.money}}</p>
+          <p>我的性别：{{obj.genter}}</p>
+        </template>
+        <template v-slot:foot="obj">
+          <h1>我的名字{{obj.na}}</h1>
+          <h1>我的年龄{{obj.age}}</h1>
+        </template>
+      </panel>
+    </div>
+
+    <script src="./vue.js"></script>
+    <script>
+      Vue.component('panel', {
+        template: `
+            <div>
+            <div className="content">
+                {{title}}
+                </div>
+            <div className="body">
+                <slot name='body' money='100' age='18' genter='男'></slot>      
+                </div>
+                 <div className="footer">
+                    <slot name='foot' :age='age':na='name'></slot> 
+                    </div>
+            </div>`,
+
+        data() {
+          return {
+            name: 'zk',
+            age: 18
+          }
+        },
+        props: ['title']
+      })
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          msg: 'hello Vue'
+        }
+      })
+      // 作用于插槽并不是一种插槽，他只是插槽一种用法 在定义插槽的同时，可以提供数据的，
+      // 可以在分发内容时，使用的组件，可以使用这些默认提供的数据
+
+      // 具体使用步骤
+      // 1。以添加属性的方式进行传值
+      //<slot money="100" title="大标题" yes="确认" no="取消" name="footer"></slot>
+      // 2，所传的值，将会被添加到一个对象中去
+      // 3.通过在template标签中的v-slot:插槽名='obj',接收参数
+    </script>
+  </body>
+</html>

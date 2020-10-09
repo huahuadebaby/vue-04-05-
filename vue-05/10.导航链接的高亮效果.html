@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .router-link-active {
+        color: red;
+      }
+      /* .router-link-exact-active {
+        color: red;
+      } */
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <router-link to="/index">登录页</router-link>
+      <router-link to="/login">用户页</router-link>
+      <router-link to="/list">尾页</router-link>
+
+      <router-view></router-view>
+    </div>
+    <script src="./vue.js"></script>
+    <script src="./vue-router.js"></script>
+    <script>
+      const rou = new VueRouter({
+        routes: [
+          {
+            path: '/index',
+            component: {
+              template: '<div> 我是一个div标签</div>'
+            }
+          },
+          {
+            path: '/login',
+            component: {
+              template: '<div> 我是第二个div标签</div>'
+            }
+          },
+          {
+            path: '/list',
+            component: {
+              template: '<div> 我是三个div标签</div>'
+            }
+          }
+        ]
+      })
+      const vm = new Vue({
+        el: '#app',
+        router: rou
+      })
+
+      // vue为了实现导航链接的跳转，，专门提供了router-link 导航链接
+      //注意点： // 1. router - link 实际渲染出来还是a标签
+      // 2.router-link 必须配置to属性，用于跳转特定的路由地址
+      // 3.router-link 在路径匹配时，给当前的a标签添加了2个类
+      //    1.router-link-exact-active 精确查找
+      // 配置项必须和地址栏hash值必须完全相等，才能匹配
+      //2.router-link-active 模糊查找
+      // 只要在地址栏的hash包含即可
+    </script>
+  </body>
+</html>

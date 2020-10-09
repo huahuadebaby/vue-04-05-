@@ -53,9 +53,18 @@
   </head>
   <body>
     <div id="app">
-      <panel msg="击败"></panel>
-      <panel :msg="ls"></panel>
-      <panel msg="双飞"></panel>
+      <panel msg="击败">
+        <p>举头望明月</p>
+        <p>低头思故乡</p>
+      </panel>
+      <panel :msg="ls">
+        <p>少大不努力</p>
+        <p>老大徒伤悲</p>
+      </panel>
+      <panel msg="双飞">
+        <p>愿你在我看不到的地方安然无恙</p>
+        <p>愿你的冬天永远不缺暖阳</p>
+      </panel>
     </div>
     <script src="./vue.js"></script>
     <script>
@@ -70,10 +79,7 @@
             </div>
             <!-- 切换显示的部分 -->
             <div class="container" v-show="isShow">
-              <p>寒雨连江夜入吴，</p>
-              <p>平明送客楚山孤。</p>
-              <p>洛阳亲友如相问，</p>
-              <p>一片冰心在玉壶。</p>
+            <slot>s</slot>
             </div>
           </div>
         `,

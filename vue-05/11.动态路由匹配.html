@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <router-link to="/user/2"> 点击一下</router-link>
+      <router-view></router-view>
+    </div>
+    <script src="./vue.js"></script>
+    <script src="./vue-router.js"></script>
+    <script>
+      const router = new VueRouter({
+        routes: [
+          {
+            path: '/user/:id',
+            component: {
+              template: `<div>我是一个div---{{$route.params.id}}</div>`,
+              created() {
+                console.log(this.$route)
+              }
+            }
+          }
+        ]
+      })
+      const vm = new Vue({
+        el: '#app',
+        router
+      })
+
+      // 对于id各不相同的用户，映射向同一个组件，要拿组件，要拿参数和路径一律找$route
+      // $route是一个对象，包含了当前路由的相关信息
+      //params 获取当前动态路由的值
+      // query 获取查询参数
+    </script>
+  </body>
+</html>

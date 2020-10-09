@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <panel :title='msg'>
+            <template v-slot:body>
+                <p>p中p</p>
+                <p>p中p</p>
+                <p>p中p</p>
+            </template>
+            <template v-slot:footer>
+                <img src="./01.gif" alt="">
+                <img src="./01.gif" alt="">
+                <img src="./01.gif" alt="">
+            </template>
+            <input type="text">
+        </panel>
+        <hr>    
+        <panel title='你好'>
+            <template v-slot:body>
+              <input type="text"><br>
+              <input type="text"><br>
+              <input type="text"><br>
+            </template>
+            <template v-slot:footer>
+                <img src="./01.gif" alt="">
+                <img src="./01.gif" alt="">
+                <img src="./01.gif" alt="">
+               
+               
+            </template>
+
+            <p>我是没人要的p</p>
+        </panel>
+
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        Vue.component('panel',{
+            template:`<div>
+            <div className="title">
+            {{title}}
+            </div>
+
+            <div className="body">
+        <slot name='body'></slot>
+            </div>
+            <div className="footer">
+            <slot name='footer'></slot>
+            </div>
+            <slot></slot>
+            </div>`,
+            props:['title']
+
+        })
+        const vm =new Vue({
+            el:'#app',
+            data:{
+                msg:'猪'
+            }
+        })
+
+// 插槽
+
+// 1.默认插槽 只要没有指派具体得内容，一律回到默认插槽<slot></slot>
+
+// 2.具名插槽：带有名字的插槽，只会接受对应指派的内容
+// 具名插槽的具体使用步骤
+// 1.给插槽起名字 <slot name='lll'></slot>
+// 2.需要使用一个template标签将将想要分派的内容包裹起来
+// 3.通过v-slot：插槽名，具体指派
+        
+
+
+
+    </script>
+</body>
+</html>

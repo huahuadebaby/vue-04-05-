@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      .my-subject {
+        border: 1px solid #000;
+        width: 300px;
+        margin: 10px;
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <h4>测试题</h4>
+      <panel
+        v-for="item in list"
+        :key="item.id"
+        :id="item.id"
+        @ccc="fa"
+      ></panel>
+
+      <p>
+        <span v-for="item in list">{{item.id}}. {{item.ans}}</span>
+      </p>
+    </div>
+
+    <script src="./vue.js"></script>
+    <script>
+      Vue.component('panel', {
+        template: `  <div class="my-subject">
+        <span>{{num1}}</span> + <span>{{num2}}</span> = <input type="text" class="sum"  v-model.number='key'>
+        <button @click='add'>提交</button>
+      </div>`,
+        data() {
+          return {
+            num1: parseInt(Math.random() * 10),
+            num2: parseInt(Math.random() * 10),
+            key: ''
+          }
+        },
+        props: ['id'],
+        methods: {
+          add() {
+            const result = this.num1 + this.num2 === this.key ? '正确' : '错误'
+            // 子传父，把正确答案传给父亲
+            this.$emit('ccc', {
+              name: result,
+              id: this.id
+            })
+          }
+        }
+      })
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          list: [
+            {
+              id: 1,
+              ans: '未完成'
+            },
+            {
+              id: 2,
+              ans: '未完成'
+            },
+            {
+              id: 3,
+              ans: '未完成'
+            },
+            {
+              id: 4,
+              ans: '未完成'
+            }
+          ]
+        },
+        methods: {
+          fa(obj) {
+            console.log(obj)
+            // 通过id找到对应的数组项，将他修改
+            const newObj = this.list.find((item) => item.id === obj.id)
+            newObj.ans = obj.name
+          }
+        }
+      })
+    </script>
+  </body>
+</html>

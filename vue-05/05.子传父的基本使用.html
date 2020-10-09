@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <panel @sb="like"></panel>
+
+      <div>老爸收到{{price}} 元</div>
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+      Vue.component('panel', {
+        template: `
+        <div>
+        <div>{{msg}}</div>
+        <button @click='add'>给老爸转钱</button>
+        </div>
+        `,
+        data() {
+          return {
+            msg: 100
+          }
+        },
+        methods: {
+          add() {
+            this.$emit('sb', this.msg)
+          }
+        }
+      })
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          price: 0
+        },
+        methods: {
+          like(msg) {
+            this.price = msg
+          }
+        }
+      })
+
+      // 子传父的基本语法
+      // 1.通过在子组件触发事件的进行传值
+      //this.$emit('事件名'，传值1，传值2)
+      // 2.通过在父组件中，通过给子组件对应的事件,接收参数
+      //<panel @sb="like"></panel>
+      // methods: {
+      //   like(value){
+
+      //   }
+      // }
+    </script>
+  </body>
+</html>

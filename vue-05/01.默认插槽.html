@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+     <!-- 需求1：将对话框封装成组件，标题通过父传子进行了定制
+      需求2：希望对话框1,内容都是input，对话框2,内容都是p -->
+    
+    <div id="app">
+        <panel :title='msg'>
+            <input type="text"> <br>
+            <input type="text"> <br>
+            <input type="text"> <br>
+        </panel>
+
+        <hr>
+        <panel title='p标签大集合'>
+            <p>我是个p标签</p>
+            <p>我是个p标签</p>
+            <p>我是个p标签</p>
+        </panel>
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        Vue.component('panel',{
+            template:`<div>
+            <div>我是一个div组件</div>
+            <div>
+            <p>{{title}}</p>
+            </div>
+            <div className="ol">
+            <slot></slot>
+            </div>
+                
+            </div>`,
+            props:['title']
+        })
+    const vm =new Vue({
+        el:'#app',
+        data:{
+            msg:'hello vue'
+        }
+    })
+// 对于复杂的结构定制，就需要用默认插槽,
+//在组件中通过<slot></slot>标签进行接受，可以完成组件的定制
+
+    </script>
+</body>
+</html>
