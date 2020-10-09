@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <p>{{msg}}</p>
+        <button @click='add'>点击 </button>
+    </div>
+    <script src="./vue.js">
+
+    </script>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                str: '',
+                msg: 1,
+                obj: {
+                    age: 1,
+                    name: 'zk'
+                }
+            },
+
+
+            methods: {
+                add() {
+                    this.msg++
+                }
+
+            },
+
+            watch: {
+                // 对msg进行监听，数据变化了，就打印
+                msg(newValue) {
+                    console.log('它的值改变了', newValue);
+                },
+                str(newValue) {
+                    console.log('它的值改变了', newValue);
+                },
+                // 对于对象的属性则通过字符串格式进行监听，要想对对象的全部属性进行监听，则通过深度监听完成
+                'obj.name'(newValue) {
+                    console.log('它的值改变了', newValue);
+
+                }
+            }
+
+
+
+
+        })
+
+        // watch为侦听器 ,它的作用是检测监听数据变化，数据变化了，就会启动你配置的函数
+    </script>
+</body>
+
+</html>

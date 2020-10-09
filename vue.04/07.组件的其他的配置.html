@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <panel></panel>
+        <panel></panel>
+        <panel></panel>
+        <button @click='add'>点击一下</button>
+        <p>{{msg}}</p>
+        <p>{{msg}}</p>
+        <p> {{msg}}</p>
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        Vue.component('panel',{
+            template:`<div>
+            <p>{{msg}}</p>
+            <button @click='add'>点击</button>
+            </div>`,
+            data(){
+                return {
+                    msg:1
+                }
+
+            },
+            methods:{
+                add(){
+                    this.msg++
+                }
+
+            }
+        });
+        const vm =new Vue({
+            el:'#app',
+            data:{
+                msg:1
+
+            },
+            methods:{
+                add(){
+                    this.msg++
+                }
+            }
+        })
+
+
+        // 组件的其他配置项与根实例相同，但data数据项与根实例不同，组件的data是一个
+        // 函数，并且通过return 返回一个对象，而根实例是一个对象，这样的可以保证每个组件的数据都是独立的
+
+
+
+// 组件与根实例配置的不同
+// 1.el是根实例独有的
+// 2.组件的data数据项是一个函数，并且通过return 返回一个对象，而根实例的data数据项是一个
+// 对象
+
+    </script>
+</body>
+</html>

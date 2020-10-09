@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script src="./vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                obj: {
+                    age: 10,
+                    name: 'zl'
+
+                }
+            },
+            watch: {
+                obj: {
+                    deep: true,
+                    handler(newValue) {
+                        console.log('这个值改变了', newValue);
+                    }
+                }
+            }
+        })
+        // 深度监视，是监视整个对象的属性，一个属性改变就执行handler后面的函数
+    </script>
+
+</body>
+
+</html>

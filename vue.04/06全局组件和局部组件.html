@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <panel></panel>
+        <panll></panll>
+    </div>
+    <div id="ll">
+        <panel></panel>
+        <panll></panll>
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        Vue.component('panel', {
+            template: `<div>我是一个div组件</div>`
+        })
+        const vm = new Vue({
+            el: '#app',
+            components: {
+                panll: {
+                    template: `<p>我是一个p组件</p>`
+                }
+
+            }
+        })
+        const vh =new Vue({
+            el:'#ll'
+        })
+
+        // 全局组件可以在所有vue实例中使用，而局部组件只能在当前实例中使用
+    </script>
+
+</body>
+
+</html>

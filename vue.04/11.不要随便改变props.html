@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <panel :msgs='msg'></panel>
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        Vue.component('panel',{
+            template:`<div>
+            <p> {{mi}}</p>
+            <h1>{{msgs}}</h1>
+            </div>`,
+            data(){
+                return{
+                    mi:1
+                }
+            },
+            props:['msgs']
+        })
+        const vm=new Vue({
+            el:'#app',
+            data:{
+                msg:2
+            }
+        })
+
+        // 组件的两个数据
+        // 1.data中的数据 自己的数据可以随便修改，
+        // 2，props 父组件中传过来的数据，不能随便修改，不然将会影响，其他子组件，不利于维护
+    </script>
+</body>
+</html>

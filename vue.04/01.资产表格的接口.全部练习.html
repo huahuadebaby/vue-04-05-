@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        .search {
+            width: 250px;
+            margin: 20px 0;
+        }
+
+        .red {
+            color: red
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="container">
+            <!-- 搜索 -->
+            <input type="text" v-foc class="form-control search" placeholder="输入关键字进行搜索" v-model.trim='key'>
+            <-- 表格 -->
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>编号</th>
+                        <th>资产名称</th>
+                        <th>资产价格</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for='(item,index) in list' :key='item.id'>
+                        <td>{{index+1}}</td>
+                        <td>{{item.name}}</td>
+                        <td :class='{red:item.price>99}'>{{item.price|time}}</td>
+                        <td><a href="javascript:;" @click=del(item.id)>删除</a></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4">{{addList|time}}</td>
+                    </tr>
+                </tfoot>
+            </table>
+            <!-- 添加资产 -->
+            <form class="form-inline">
+                <input type="text" class="form-control" placeholder="资产名称" v-model.trim='name'>
+                &nbsp;&nbsp;
+                <input type="text" class="form-control" placeholder="资产价格" v-model.number='price'>
+                &nbsp;&nbsp;
+                <button class="btn btn-primary" @click.prevent='add'>添加资产</button>
+            </form>
+        </div>
+    </div>
+    <script src="./vue.js"></script>
+    <script src="./axios.js"></script>
+
+    <script>
+        // 自定义指令获取焦点 
+        Vue.directive('foc', {
+            inserted(el) {
+                el.focus()
+            }
+        })
+
+
+        // 过滤器修改价格格式
+        Vue.filter('time', (value => {
+            // console.log(typeof (value));
+            return '¥' + value.toFixed(2)
+        }))
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                list: [],
+                name: '',
+                price: '',
+                key: ''
+            },
+            // 生命函数，进来先获取数据渲染页面
+            created() {
+                this.showList()
+
+     },
+
+            methods: {
+                // 渲染功能
+                showList() {
+                    axios.get('http://localhost:3000/list').then(res => {
+                        this.list = res.data
+                    })
+                },
+                // 删除功能
+                del(id) {
+                    axios.delete(`http://localhost:3000/list/${id}`).then(
+                        res => {
+                            this.showList()
+                        }
+                    )
+                },
+                //添加功能
+                add() {
+                    axios.post('http://localhost:3000/list', {
+                        name: th+is.name,
+                        price: this.price
+                    }).then(res => {
+                        if (this.name === '') return;
+                        if (this.price === '' || this.price <= 0) return;
+                        // 重新渲染页面
+                        this.showList();
+                        this.name = '';
+                        this.price = ''
+
+
+                    })
+
+                }
+
+            },
+            // 计算属性处理价格总数
+            computed: {
+                addList() {
+                    let sum = 0;
+                    this.list.forEach(item => sum += item.price)
+                    return sum
+                }
+            },
+            // 侦听器,
+            // 侦听搜索框内容的变化， 从而完成搜索功能
+            watch: {
+                // 进行优化,使用防抖,防止请求一直发送
+                key(newValue) {
+                    clearTimeout(timeId);
+                    const timeId = setTimeout(() => {
+                        axios.get('http://localhost:3000/list', {
+                            params: {
+                                name_like: newValue
+                            }
+                        }).then(res => {
+                            this.list = res.data
+                        })
+                    }, 300)
+                }
+
+            }
+
+        })
+    </script>
+</body>
+
+</html>
